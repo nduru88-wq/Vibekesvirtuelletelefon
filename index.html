@@ -1,273 +1,366 @@
 <!doctype html>
 <html lang="da">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-<title>Vibekes telefon</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Vibekes telefon</title>
 
-<link rel="apple-touch-icon" sizes="180x180" href="telefon.png" />
-<link rel="apple-touch-icon" href="telefon.png" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="default" />
-<meta name="apple-mobile-web-app-title" content="Vibekes telefon" />
-<link rel="icon" href="telefon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="telefon.png" />
+  <link rel="apple-touch-icon" href="telefon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Vibekes telefon" />
+  <link rel="icon" href="telefon.png" />
 
-<style>
-:root{
-  --bg:#0b1220;
-  --text:#fff;
-  --muted:rgba(255,255,255,.75);
-  --stroke:rgba(255,255,255,.12);
-  --shadow:0 10px 30px rgba(0,0,0,.35);
-  --radius:22px;
+  <style>
+    :root{
+      --bg:#0b1220;
+      --text:#fff;
+      --muted:rgba(255,255,255,.75);
+      --stroke:rgba(255,255,255,.12);
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:22px;
 
-  --tileMinH:160px;
-  --gap:14px;
-}
+      --tileMinH:160px;
+      --gap:14px;
 
-*{
-  box-sizing:border-box;
-  -webkit-user-select:none;
-  user-select:none;
-  -webkit-touch-callout:none;
-  touch-action:manipulation;
-}
+      --headerPad: 10px;
+      --iconSize: 72px;
+    }
 
-html,body{
-  height:100%;
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-}
+    *{
+      box-sizing:border-box;
+      -webkit-user-select:none;
+      user-select:none;
+      -webkit-touch-callout:none;
+      touch-action:manipulation;
+    }
 
-body{
-  background:
-    radial-gradient(1200px 800px at 50% 0%, rgba(80,140,255,.22), transparent 55%),
-    radial-gradient(900px 600px at 10% 90%, rgba(0,255,170,.10), transparent 55%),
-    var(--bg);
-  color:var(--text);
-}
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    }
 
-.page{
-  min-height:100%;
-  padding:18px;
-  display:flex;
-  justify-content:center;
-}
+    body{
+      background:
+        radial-gradient(1200px 800px at 50% 0%, rgba(80,140,255,.22), transparent 55%),
+        radial-gradient(900px 600px at 10% 90%, rgba(0,255,170,.10), transparent 55%),
+        var(--bg);
+      color:var(--text);
+    }
 
-.wrap{
-  width:100%;
-  max-width:980px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
+    .page{
+      min-height:100%;
+      padding:calc(14px + env(safe-area-inset-top)) 14px calc(14px + env(safe-area-inset-bottom));
+      display:flex;
+      justify-content:center;
+    }
 
-.header{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:10px;
-}
+    .wrap{
+      width:100%;
+      max-width:980px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
 
-.topIcon{
-  width:min(150px,40vw);
-  aspect-ratio:1;
-  border-radius:28px;
-  background:rgba(255,255,255,.06);
-  border:1px solid var(--stroke);
-  box-shadow:var(--shadow);
-  display:grid;
-  place-items:center;
-}
-.topIcon img{
-  width:75%;
-  height:75%;
-  object-fit:contain;
-}
+    /* ✅ Kompakt header */
+    .header{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:var(--headerPad);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      background:rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
+    }
 
-h1{
-  margin:0;
-  font-size:clamp(20px,3vw,30px);
-  text-align:center;
-}
+    .topIcon{
+      width:var(--iconSize);
+      height:var(--iconSize);
+      border-radius:18px;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--stroke);
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+    }
 
-.hint{
-  margin:0;
-  color:var(--muted);
-  font-size:14px;
-  text-align:center;
-}
+    .topIcon img{
+      width:74%;
+      height:74%;
+      object-fit:contain;
+    }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:var(--gap);
-}
+    .headText{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-width:0;
+    }
 
-.card{
-  position:relative;
-  text-decoration:none;
-  color:inherit;
-  border-radius:var(--radius);
-  border:1px solid var(--stroke);
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  min-height:var(--tileMinH);
-  background:rgba(255,255,255,.06);
-}
+    h1{
+      margin:0;
+      font-size:clamp(18px,3.2vw,28px);
+      line-height:1.05;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
 
-.card:active{
-  transform:scale(.985);
-}
+    .hint{
+      margin:0;
+      color:var(--muted);
+      font-size:clamp(12px,2.6vw,14px);
+      line-height:1.2;
+    }
 
-.photo{
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:var(--gap);
+    }
 
-.photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+    .card{
+      position:relative;
+      text-decoration:none;
+      color:inherit;
+      border-radius:var(--radius);
+      border:1px solid var(--stroke);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      min-height:var(--tileMinH);
+      background:rgba(255,255,255,.06);
+      -webkit-tap-highlight-color:transparent;
+      transform:translateZ(0);
+    }
 
-.initial{
-  font-size:52px;
-  font-weight:900;
-}
+    .card:active{ transform:scale(.985); }
 
-.shade{
-  position:absolute;
-  left:0; right:0; bottom:0;
-  height:55%;
-  background:linear-gradient(to top, rgba(0,0,0,.75), transparent);
-}
+    .photo{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.06);
+    }
 
-.overlay{
-  position:absolute;
-  left:0; right:0; bottom:0;
-  padding:10px;
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:8px;
-}
+    .photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
 
-.name{
-  margin:0;
-  font-weight:900;
-  font-size:clamp(18px,3vw,24px);
-  line-height:1;
-  text-shadow:0 2px 8px rgba(0,0,0,.6);
-}
+    .initial{
+      font-size:52px;
+      font-weight:900;
+      opacity:.95;
+    }
 
-/* 🔹 Justeret badge så den matcher navnehøjden */
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:5px 10px;              /* mindre højde */
-  border-radius:999px;
-  background:rgba(0,255,170,.18);
-  border:1px solid rgba(0,255,170,.35);
-  font-weight:700;
-  font-size:clamp(11px,2.4vw,13px);
-  line-height:1;
-  white-space:nowrap;
-  text-shadow:0 2px 8px rgba(0,0,0,.4);
-}
+    .shade{
+      position:absolute;
+      left:0; right:0; bottom:0;
+      height:55%;
+      background:linear-gradient(to top, rgba(0,0,0,.75), transparent);
+      pointer-events:none;
+    }
 
-.dot{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:#00ffaa;
-  position:relative;
-}
+    .overlay{
+      position:absolute;
+      left:0; right:0; bottom:0;
+      padding:10px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:8px;
+    }
 
-/* 🔹 Langsom pulserende online-effekt */
-.dot::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  background:#00ffaa;
-  animation:pulse 2.5s infinite ease-out;
-}
+    .name{
+      margin:0;
+      font-weight:900;
+      font-size:clamp(18px,3vw,24px);
+      line-height:1;
+      text-shadow:0 2px 8px rgba(0,0,0,.6);
+    }
 
-@keyframes pulse{
-  0%{
-    transform:scale(1);
-    opacity:.7;
-  }
-  70%{
-    transform:scale(2.2);
-    opacity:0;
-  }
-  100%{
-    opacity:0;
-  }
-}
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:5px 10px;
+      border-radius:999px;
+      background:rgba(0,255,170,.18);
+      border:1px solid rgba(0,255,170,.35);
+      font-weight:700;
+      font-size:clamp(11px,2.4vw,13px);
+      line-height:1;
+      white-space:nowrap;
+      text-shadow:0 2px 8px rgba(0,0,0,.4);
+      flex:0 0 auto;
+    }
 
-/* Små skærme (iPhone 8) */
-@media (max-width:390px){
-  :root{
-    --tileMinH:140px;
-  }
-}
+    .dot{
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:#00ffaa;
+      position:relative;
+    }
 
-</style>
+    .dot::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      background:#00ffaa;
+      animation:pulse 2.5s infinite ease-out;
+    }
+
+    @keyframes pulse{
+      0%   { transform:scale(1);   opacity:.7; }
+      70%  { transform:scale(2.2); opacity:0;  }
+      100% { opacity:0; }
+    }
+
+    /* Små skærme (iPhone 8) */
+    @media (max-width:390px){
+      :root{
+        --tileMinH:140px;
+        --gap:12px;
+        --headerPad: 8px;
+        --iconSize: 60px;
+      }
+      .overlay{ padding:9px; }
+    }
+
+    /* Landscape: 3 pr række */
+    @media (orientation: landscape) and (max-height: 430px){
+      .grid{ grid-template-columns:repeat(3,1fr); }
+      :root{ --tileMinH:130px; }
+    }
+  </style>
 </head>
 
 <body>
-<div class="page"><div class="wrap">
+  <div class="page"><div class="wrap">
 
-<header class="header">
-  <div class="topIcon"><img src="telefon.png" alt=""></div>
-  <h1>Vibekes telefon</h1>
-  <p class="hint">Tryk på et billede for at ringe</p>
-</header>
+    <header class="header">
+      <div class="topIcon"><img src="telefon.png" alt=""></div>
+      <div class="headText">
+        <h1>Vibekes telefon</h1>
+        <p class="hint">Tryk på billede for opkald</p>
+      </div>
+    </header>
 
-<main class="grid">
+    <main class="grid">
 
-<a class="card" href="tel:+4520324378">
-  <div class="photo">
-    <img src="peter.jpg" alt="Peter"
-    onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;initial&quot;>P</div>';">
-  </div>
-  <div class="shade"></div>
-  <div class="overlay">
-    <p class="name">Peter</p>
-    <span class="badge"><span class="dot"></span> RING</span>
-  </div>
-</a>
+      <a class="card" href="tel:+4520324378" aria-label="Ring til Peter">
+        <div class="photo">
+          <img src="peter.jpg" alt="Peter" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;initial&quot;>P</div>';">
+        </div>
+        <div class="shade"></div>
+        <div class="overlay">
+          <p class="name">Peter</p>
+          <span class="badge"><span class="dot"></span> RING</span>
+        </div>
+      </a>
 
-<a class="card" href="tel:+4528965403">
-  <div class="photo">
-    <img src="hanne.jpg" alt="Hanne"
-    onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;initial&quot;>H</div>';">
-  </div>
-  <div class="shade"></div>
-  <div class="overlay">
-    <p class="name">Hanne</p>
-    <span class="badge"><span class="dot"></span> RING</span>
-  </div>
-</a>
+      <a class="card" href="tel:+4521538213" aria-label="Ring til Poula">
+        <div class="photo">
+          <img src="poula.jpg" alt="Poula" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;initial&quot;>P</div>';">
+        </div>
+        <div class="shade"></div>
+        <div class="overlay">
+          <p class="name">Poula</p>
+          <span class="badge"><span class="dot"></span> RING</span>
+        </div>
+      </a>
 
-</main>
+      <a class="card" href="tel:+4528223687" aria-label="Ring til Bente">
+        <div class="photo">
+          <img src="bente.jpg" alt="Bente" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;initial&quot;>B</div>';">
+        </div>
+        <div class="shade"></div>
+        <div class="overlay">
+          <p class="name">Bente</p>
+          <span class="badge"><span class="dot"></span> RING</span>
+        </div>
+      </a>
 
-</div></div>
+      <a class="card" href="tel:+4523985223" aria-label="Ring til Britta">
+        <div class="photo">
+          <img src="britta.jpg" alt="Britta" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;initial&quot;>B</div>';">
+        </div>
+        <div class="shade"></div>
+        <div class="overlay">
+          <p class="name">Britta</p>
+          <span class="badge"><span class="dot"></span> RING</span>
+        </div>
+      </a>
 
-<script>
-function tinyVibrate() {
-  try { if (navigator.vibrate) navigator.vibrate(20); } catch(e) {}
-}
-document.querySelectorAll('.card').forEach(a => {
-  a.addEventListener('click', () => tinyVibrate(), { passive: true });
-});
-</script>
+      <a class="card" href="tel:+4542769137" aria-label="Ring til Else">
+        <div class="photo">
+          <img src="else.jpg" alt="Else" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;initial&quot;>E</div>';">
+        </div>
+        <div class="shade"></div>
+        <div class="overlay">
+          <p class="name">Else</p>
+          <span class="badge"><span class="dot"></span> RING</span>
+        </div>
+      </a>
 
+      <a class="card" href="tel:+4521764268" aria-label="Ring til Herdis">
+        <div class="photo">
+          <img src="herdis.jpg" alt="Herdis" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;initial&quot;>H</div>';">
+        </div>
+        <div class="shade"></div>
+        <div class="overlay">
+          <p class="name">Herdis</p>
+          <span class="badge"><span class="dot"></span> RING</span>
+        </div>
+      </a>
+
+      <a class="card" href="tel:+4528965403" aria-label="Ring til Hanne">
+        <div class="photo">
+          <img src="hanne.jpg" alt="Hanne" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;initial&quot;>H</div>';">
+        </div>
+        <div class="shade"></div>
+        <div class="overlay">
+          <p class="name">Hanne</p>
+          <span class="badge"><span class="dot"></span> RING</span>
+        </div>
+      </a>
+
+      <a class="card" href="tel:+4541663491" aria-label="Ring til Karen">
+        <div class="photo">
+          <img src="karen.jpg" alt="Karen" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;initial&quot;>K</div>';">
+        </div>
+        <div class="shade"></div>
+        <div class="overlay">
+          <p class="name">Karen</p>
+          <span class="badge"><span class="dot"></span> RING</span>
+        </div>
+      </a>
+
+    </main>
+  </div></div>
+
+  <script>
+    // 📳 LILLE VIBRATION VED TRYK (virker typisk på Android; iPhone/Safari understøtter ofte ikke vibrate)
+    function tinyVibrate() {
+      try { if (navigator.vibrate) navigator.vibrate(20); } catch(e) {}
+    }
+    document.querySelectorAll('.card').forEach(a => {
+      a.addEventListener('click', () => tinyVibrate(), { passive: true });
+    });
+
+    // 🔒 Ekstra: stop iOS pinch-zoom gestures (virker på nogle iOS-versioner)
+    ['gesturestart','gesturechange','gestureend'].forEach(evt => {
+      document.addEventListener(evt, function(e){ e.preventDefault(); }, { passive: false });
+    });
+  </script>
 </body>
 </html>
