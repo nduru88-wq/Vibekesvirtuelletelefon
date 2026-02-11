@@ -67,7 +67,7 @@ body{
   gap:16px;
 }
 
-/* ✅ CENTERET HEADER (let gennemsigtig / glas) */
+/* ✅ Header (let gennemsigtig / glas) */
 .header{
   display:flex;
   flex-direction:column;
@@ -77,7 +77,7 @@ body{
   padding:12px 12px 10px;
   border-radius:var(--radius);
   border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.045);      /* 👈 lidt mere gennemsigtig */
+  background:rgba(255,255,255,.045);
   box-shadow:var(--shadow);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -93,15 +93,13 @@ body{
   box-shadow:0 10px 30px rgba(0,0,0,.35);
   display:grid;
   place-items:center;
-  animation: iconBreath 4.2s ease-in-out infinite; /* 👈 rolig */
+  animation: iconBreath 4.2s ease-in-out infinite;
   transform-origin:center;
 }
-
 @keyframes iconBreath{
   0%,100%{ transform:scale(1); }
-  50%{ transform:scale(1.035); } /* meget mild */
+  50%{ transform:scale(1.035); }
 }
-
 .topIcon img{
   width:75%;
   height:75%;
@@ -112,7 +110,6 @@ h1{
   margin:0;
   font-size:clamp(20px,3.2vw,30px);
 }
-
 .hint{
   margin:0;
   color:rgba(255,255,255,.82);
@@ -134,39 +131,42 @@ h1{
   box-shadow:var(--shadow);
   overflow:hidden;
   background:rgba(255,255,255,.06);
-  min-height:var(--cardMinH);
+
+  /* Safari-stabilitet */
   display:flex;
   flex-direction:column;
+  min-height:var(--cardMinH);
   -webkit-tap-highlight-color:transparent;
   transform:translateZ(0);
 }
 .card:active{ transform:scale(.985); }
 
+/* ✅ Safari-fix: brug flex-basis i stedet for height */
 .photo{
-  height:var(--photoH);
+  flex:0 0 var(--photoH);
   background:rgba(255,255,255,.05);
-  display:grid;
-  place-items:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   padding:10px;
 }
-
 .photo img{
   width:100%;
   height:100%;
-  object-fit:contain; /* viser hele billedet */
+  object-fit:contain;       /* viser hele billedet */
   display:block;
 }
 
+/* fallback initial */
 .initial{
   font-size:52px;
   font-weight:900;
   opacity:.95;
 }
 
-/* ✅ Mere kontrast i infofeltet */
 .info{
-  height:var(--infoH);
-  background:rgba(0,0,0,.88);            /* 👈 mere sort */
+  flex:0 0 var(--infoH);
+  background:rgba(0,0,0,.88);
   border-top:1px solid rgba(255,255,255,.10);
   display:flex;
   align-items:center;
@@ -199,7 +199,6 @@ h1{
   white-space:nowrap;
 }
 
-/* Pulserende online-prik */
 .dot{
   width:9px;
   height:9px;
@@ -207,7 +206,6 @@ h1{
   background:#00ffaa;
   position:relative;
 }
-
 .dot::after{
   content:"";
   position:absolute;
@@ -216,11 +214,15 @@ h1{
   background:#00ffaa;
   animation:pulse 2.5s infinite ease-out;
 }
-
 @keyframes pulse{
   0%{ transform:scale(1); opacity:.7; }
   70%{ transform:scale(2.2); opacity:0; }
   100%{ opacity:0; }
+}
+
+/* ✅ Safari-specific tweak: mindre “luft” så billeder ikke ser små ud */
+@supports (-webkit-overflow-scrolling: touch) {
+  .photo{ padding:6px; } /* Safari: mindre padding => billedet ser større ud */
 }
 
 /* Små skærme (iPhone 8) */
@@ -232,7 +234,6 @@ h1{
     --iconSize: 102px;
     --gap:12px;
   }
-  .photo{ padding:8px; }
   .info{ padding:9px 10px; }
 }
 
@@ -254,7 +255,7 @@ h1{
 <header class="header">
   <div class="topIcon"><img src="telefon.png" alt=""></div>
   <h1>Vibekes telefon</h1>
-  <p class="hint">Tryk på billederne for opkald</p>
+  <p class="hint">Tryk på billede for opkald</p>
 </header>
 
 <main class="grid">
@@ -357,8 +358,6 @@ function tinyVibrate() {
 document.querySelectorAll('.card').forEach(a => {
   a.addEventListener('click', () => tinyVibrate(), { passive: true });
 });
-
-// (Valgfrit) stop pinch-zoom gestures på iOS
 ['gesturestart','gesturechange','gestureend'].forEach(evt => {
   document.addEventListener(evt, function(e){ e.preventDefault(); }, { passive: false });
 });
